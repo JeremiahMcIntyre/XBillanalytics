@@ -32,7 +32,7 @@ class GUI:
         self.frame_gettotal = Frame(self.window)
         self.button_gettotal = Button(self.frame_gettotal, text='Process', command=self.process_file)
         self.button_gettotal.pack()
-        self.frame_gettotal.pack(side='bottom')
+        self.frame_gettotal.pack(side='bottom', pady=30)
 
 
     def get_file(self) ->None:
@@ -60,6 +60,7 @@ class GUI:
                         self.companies_dict[row[4]] = float(row[5])
                 else:
                     self.companies_dict[row[4]] += float(row[5])
+        self.entry_file.delete(0, 'end')
         self.companies = list(self.companies_dict.keys())
         self.tax_liability = list(self.companies_dict.values())
         self.total = sum(self.tax_liability)
@@ -68,6 +69,7 @@ class GUI:
         self.fig2 = []
         for i in range(len(self.companies)):
             self.fig2.append([self.companies[i], round(self.tax_liability[i],2)])
+        self.fig2.append(['Total', round(self.total,2)])
         fig1 = plt.figure("Figure 1")
         plt.pie(self.array, labels = self.companies)
         plt.legend()
@@ -76,6 +78,7 @@ class GUI:
         self.collabel = ("Company Name", "Tax Liability")
         plt.table(cellText=self.fig2,colLabels=self.collabel,loc='center')
         plt.show()
+
 
 
 
